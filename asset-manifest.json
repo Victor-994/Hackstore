@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Hackstore.io/static/css/main.e2665396.css",
+    "main.js": "/Hackstore.io/static/js/main.e3a40a8d.js",
+    "index.html": "/Hackstore.io/index.html",
+    "main.e2665396.css.map": "/Hackstore.io/static/css/main.e2665396.css.map",
+    "main.e3a40a8d.js.map": "/Hackstore.io/static/js/main.e3a40a8d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e2665396.css",
+    "static/js/main.e3a40a8d.js"
+  ]
+}

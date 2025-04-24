@@ -1,5 +1,9 @@
 const API_URL = "https://hack-backend-lcsb.onrender.com";
 
+// http://localhost:5000
+
+// https://hack-backend-lcsb.onrender.com/
+
 export const fetchProducts = async () => {
   const res = await fetch(`${API_URL}/products`);
   return res.json();

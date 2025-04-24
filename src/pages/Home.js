@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
-      <h1 className="text-3xl font-bold mb-4">CTF Tech Store</h1>
+      {/* <h1 className="text-3xl font-bold mb-4">CTF Tech Store</h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product, i) => (
           <div key={i} className="bg-white p-4 rounded shadow-md">

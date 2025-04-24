@@ -2,53 +2,66 @@ import React from 'react';
 
 export default function CTFInfo() {
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6 text-white">CTF Competition Info</h1>
+    
+      <div className="max-w-4xl mx-auto p-8">
+        <h1 className="text-3xl font-bold mb-4">🕵️‍♂️ Welcome to the Hacktales Beginner CTF Challenge!</h1>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold">🕹️ What is this?</h2>
-        <p>
-          This is a Capture The Flag (CTF) cybersecurity competition designed to test your ability to find and exploit vulnerabilities in a tech store web application. Each discovered vulnerability rewards you with a flag and points.
-        </p>
-      </section>
+      <h2 className="text-xl font-semibold mt-6 mb-2">🎯 Objective</h2>
+      <p>
+        Your mission is simple: <strong>find and capture as many flags as you can</strong> by exploring and exploiting the vulnerable eCommerce website we've built just for this challenge.
+      </p>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold">🎯 How to Participate</h2>
-        <ol className="list-decimal pl-6">
-          <li>Register or Login on the app.</li>
-          <li>Explore different sections of the site, including login, comment forms, etc.</li>
-          <li>Exploit known vulnerabilities to discover flags CTF.</li>
-          <li>The flags looks like this format "'CTF(example_flag_here)'".</li>
-          <li>Submit each flag through the “Submit Flag” page.</li>
-        </ol>
-      </section>
+      <h2 className="text-xl font-semibold mt-6 mb-2">🏆 How to Win</h2>
+      <p>
+        The <strong>top 3 participants</strong> with the <strong>highest score</strong> will be declared the winners.
+        If multiple players have the same score, the <strong>fastest completion time</strong> will break the tie.
+      </p>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold">🏆 Scoring & Ranking</h2>
-        <ul className="list-disc pl-6">
-          <li>Each valid flag is worth <strong>100 points</strong>.</li>
-          <li>Your total score increases as you submit more valid flags.</li>
-          <li>Ranking is based on total score. In case of ties, the player with the <strong>earliest first submission</strong> ranks higher.</li>
-          <li>Top 3 players will be picked based on this scoring system.</li>
-        </ul>
-      </section>
+      <h2 className="text-xl font-semibold mt-6 mb-2">🛠️ How to Get Started</h2>
+      <ul className="list-disc list-inside space-y-2">
+        <li><strong>Register / Sign In</strong> to track your flag submissions and progress.</li>
+        <li><strong>Explore the Site</strong> like a regular user — but with a hacker’s mindset!</li>
+        <li><strong>Find Vulnerabilities</strong>: look out for XSS, SQLi, auth flaws, and more.</li>
+        <li><strong>Capture the Flag</strong>: Submit any flag you find to score points.</li>
+        <li><strong>Check the Scoreboard</strong>: See how you stack up in real-time.</li>
+      </ul>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold">💡 Hint</h2>
-        <p>
-          There might be a hidden admin endpoint that reveals interesting data. Try inspecting headers or exploring less-obvious parts of the backend. Look for a secret key like <code>x-admin-key</code>... 👀
-        </p>
-        <p>Once you find that secret endpoint, find a header 'x-admin-key' and 'x-username' put the value for the headers to get the flag.</p>
-        <p>The value for 'x-username' is your user name and for the x-admin-key solve the riddle below:</p>
-        <p><i>I am the bedrock, though rarely seen.
+      <h2 className="text-xl font-semibold mt-6 mb-2">📌 Tips for Success</h2>
+      <ul className="list-disc list-inside space-y-1">
+        <li>Take notes and stay organized.</li>
+        <li>Use browser dev tools to investigate inputs and responses.</li>
+        <li>Use the <strong>Hints</strong> page — it exists for a reason. 😉</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">🕵️‍♀️ Hidden Challenge Clue</h2>
+      <p>
+        There’s a hidden path somewhere in the shadows of the backend — a secret route for those curious enough to investigate beyond what’s visible.  
+        <br />
+        💡 <em>Clue:</em> “The real admin panel isn’t on the map — but the headers might show you the way.”
+          <p>The value for 'x-username' is your user name and for the x-admin-key solve the riddle below:</p>
+          <p><i>I am the bedrock, though rarely seen.
           I whisper commands, yet hold no machine.
           I set the boundaries, then stand outside.
           A digital deity, where all must abide.
 
           What am I?</i></p>
-          <br></br>
-          <p>Also you can use postman to check endpoints to</p>
-      </section>
+      </p>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">🚫 What Not to Do</h2>
+      <ul className="list-disc list-inside space-y-1">
+        <li>No brute-forcing or spamming endpoints.</li>
+        <li>No sharing of flags or spoilers publicly.</li>
+        <li>Don’t attack the infrastructure — stick to what’s intentionally vulnerable.</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mt-6 mb-2">🧠 Final Words</h2>
+      <p>
+        By the end of the CTF, you’ll have real-world hacking experience under your belt.
+        Learn, break stuff, and most importantly — have fun.
+        <br />
+        Good luck, and happy hacking! 🔍💻
+      </p>
+
     </div>
   );
 }

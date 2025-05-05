@@ -46,7 +46,8 @@ const Scoreboard = () => {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/scoreboard');
+        // const response = await axios.get('http://localhost:5000/scoreboard');
+        const response = await axios.get('https://hack-backend-lcsb.onrender.com/scoreboard');
         setScores(response.data);
       } catch (error) {
         console.error('Failed to fetch scoreboard:', error);

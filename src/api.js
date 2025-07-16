@@ -1,4 +1,4 @@
-const API_URL = "https://hack-backend-lcsb.onrender.com/";
+const API_URL = "https://hack-backend-lcsb.onrender.com";
 
 // http://localhost:5000
 

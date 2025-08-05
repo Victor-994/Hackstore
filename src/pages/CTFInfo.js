@@ -56,6 +56,15 @@ export default function CTFInfo() {
                 <p className="text-sm mt-4 text-gray-400">Hint: You can use tools like Postman or curl to make a request with custom headers.</p>
             </div>
         </div>
+        <div className="bg-gray-800 p-4 rounded-md">
+            <h3 className="font-bold text-lg text-green-400">Web Vulnerability Challenges</h3>
+            <ul className="list-disc list-inside mt-2 space-y-2">
+                {/* --- NEW HINT --- */}
+                <li><strong>Product Enumeration:</strong> Not all products are for public viewing. Can you find a way to list the unpublished items using the site's search functionality? The endpoint is `/api/products/search`.</li>
+                <li><strong>Login Bypass:</strong> Is the login form as strong as it seems?</li>
+                {/* ... other hints ... */}
+            </ul>
+        </div>
 
         <div>
           <h2 className="text-xl font-semibold mt-6 mb-2 text-red-400">🚫 Rules of Engagement</h2>

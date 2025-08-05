@@ -11,6 +11,7 @@ import Comment from "./pages/Comment";
 import SubmitFlag from "./pages/SubmitFlag";
 import Scoreboard from "./pages/Scoreboard";
 import CTFInfo from "./pages/CTFInfo";
+import ProductPage from "./pages/ProductPage";
 import React from "react";
 
 import Profile from "./pages/Profile"; // New Profile page
@@ -48,6 +49,7 @@ function App() {
               {/* --- NEW ROUTES --- */}
               <Route path="/profile" element={<Profile />} />
               <Route path="/king-of-the-hill" element={<KingOfTheHill />} />
+              <Route path="/products/:id" element={<ProductPage />} />
             </Routes>
           </main>
         </div>

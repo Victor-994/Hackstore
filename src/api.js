@@ -2,7 +2,7 @@ const API_URL = "https://hack-backend-lcsb.onrender.com";
 
 // http://localhost:5000
 
-// https://hack-backend-lcsb.onrender.com/
+// https://hack-backend-lcsb.onrender.com
 
 
 export const fetchProducts = async () => {
@@ -98,5 +98,14 @@ export const captureKingOfTheHill = async (username, answer) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, answer }),
     });
+    return res.json();
+};
+
+
+export const getProductById = async (id) => {
+    const res = await fetch(`${API_URL}/api/products/${id}`);
+    if (!res.ok) {
+        throw new Error('Product not found');
+    }
     return res.json();
 };

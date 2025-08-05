@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchProducts, getActivityFeed } from "../api";
+import { Link } from "react-router-dom";
 
 // --- NEW COMPONENT ---
 function LiveActivityFeed() {
@@ -49,13 +50,15 @@ export default function Home() {
         <div className="md:col-span-2">
             <h1 className="text-4xl text-center font-bold mb-8 text-green-400">CTF Tech Store</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {products.map((product, i) => (
-                <div key={i} className="bg-gray-900 border border-green-500 p-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300">
+                {products.map((product) => (
+                <Link to={`/products/${product._id}`} key={product._id}>
+                <div className="bg-gray-900 border border-green-500 p-4 rounded shadow-lg transform hover:scale-105 transition-transform duration-300">
                     <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded mb-4" />
                     <h2 className="text-xl text-green-300 font-semibold">{product.name}</h2>
                     <p className="text-gray-400 mt-2">{product.description}</p>
                     <p className="font-bold text-2xl text-white mt-4">${product.price}</p>
                 </div>
+                </Link>
                 ))}
             </div>
         </div>

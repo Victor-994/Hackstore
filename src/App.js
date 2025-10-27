@@ -1,31 +1,29 @@
+import React, { Suspense, lazy } from "react"; // Import Suspense and lazy
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext"; 
-import { Toaster } from 'react-hot-toast'; // Import Toaster
-
-
+import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from 'react-hot-toast';
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Comment from "./pages/Comment";
-import SubmitFlag from "./pages/SubmitFlag";
-import Scoreboard from "./pages/Scoreboard";
-import CTFInfo from "./pages/CTFInfo";
-import ProductPage from "./pages/ProductPage";
-import React from "react";
+import RequireAuth from "./components/RequireAuth"; // Import RequireAuth
 
-import Profile from "./pages/Profile"; // New Profile page
-import KingOfTheHill from "./pages/KingOfTheHill"; // New King of the Hill page
+// Lazy load pages
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Comment = lazy(() => import("./pages/Comment"));
+const SubmitFlag = lazy(() => import("./pages/SubmitFlag"));
+const Scoreboard = lazy(() => import("./pages/Scoreboard"));
+const CTFInfo = lazy(() => import("./pages/CTFInfo"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const Profile = lazy(() => import("./pages/Profile"));
+// REMOVED: const KingOfTheHill = lazy(() => import("./pages/KingOfTheHill"));
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        {/* Toaster component for notifications */}
         <Toaster
           position="top-right"
           toastOptions={{
-            className: '',
             style: {
               margin: '10px',
               background: '#333',
@@ -36,21 +34,41 @@ function App() {
         />
         <div className="bg-gray-800 text-white min-h-screen font-sans">
           <Navbar />
-          <main className="container mx-auto px-4">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/comment" element={<Comment />} />
-              <Route path="/submit-flag" element={<SubmitFlag />} />
-              <Route path="/scoreboard" element={<Scoreboard />} />
-              <Route path="/ctf-info" element={<CTFInfo />} />
+          <main className="container mx-auto px-4 py-8"> {/* Added padding */}
+            {/* Suspense fallback for lazy loading */}
+            <Suspense fallback={<div className="text-center py-12">Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/comment" element={<Comment />} /> {/* Public comment page */}
+                <Route path="/scoreboard" element={<Scoreboard />} /> {/* Public scoreboard */}
+                <Route path="/ctf-info" element={<CTFInfo />} />
+                <Route path="/products/:id" element={<ProductPage />} />
 
-              {/* --- NEW ROUTES --- */}
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/king-of-the-hill" element={<KingOfTheHill />} />
-              <Route path="/products/:id" element={<ProductPage />} />
-            </Routes>
+                {/* --- Protected Routes --- */}
+                <Route
+                  path="/submit-flag"
+                  element={
+                    <RequireAuth>
+                      <SubmitFlag />
+                    </RequireAuth>
+                  }
+                />
+                 <Route
+                  path="/profile"
+                  element={
+                    <RequireAuth>
+                      <Profile />
+                    </RequireAuth>
+                  }
+                />
+                {/* REMOVED King of the Hill Route */}
+
+                {/* Optional: Add a 404 Not Found route */}
+                <Route path="*" element={<div className="text-center py-12">Page Not Found</div>} />
+              </Routes>
+            </Suspense>
           </main>
         </div>
       </Router>

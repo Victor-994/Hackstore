@@ -16,7 +16,6 @@ export default function CTFInfo() {
           <p>The <strong>top 3 participants</strong> with the <strong>highest score</strong> will be declared the winners. If multiple players have the same score, the <strong>fastest completion time</strong> (based on your first flag submission) will break the tie.</p>
         </div>
         
-        {/* --- NEW SECTION: HTTP Header Challenge --- */}
         <div>
             <h2 className="text-xl font-semibold mt-6 mb-2 text-green-300">🔎 The Inspector's Challenge</h2>
             <p>Not all secrets are in the page source. Some are hidden in the conversation between your browser and our server. </p>
@@ -32,14 +31,7 @@ export default function CTFInfo() {
                 <h3 className="font-bold text-lg text-red-500">🩸 First Blood Bonus</h3>
                 <p>The very first player to submit a unique flag gets an extra <strong className="text-white">50 point bonus!</strong> Speed is key.</p>
             </div>
-            <div className="bg-gray-800 p-4 rounded-md">
-                <h3 className="font-bold text-lg text-yellow-500">👑 King of the Hill</h3>
-                <p>A special, ongoing challenge where only one person can hold the crown. To capture the hill, solve the riddle below and submit the answer on the "King of the Hill" page.</p>
-                <div className="mt-2 p-3 bg-gray-700 border-l-4 border-yellow-500">
-                    <p className="font-semibold">Current Challenge Riddle:</p>
-                    <p className="italic mt-2">I have keys, but open no doors. I have a space, but no room. You can enter, but can't go outside. What am I?</p>
-                </div>
-            </div>
+            {/* REMOVED King of the Hill Section */}
           </div>
         </div>
 
@@ -52,17 +44,21 @@ export default function CTFInfo() {
                     <li><code className="text-yellow-400">x-username</code>: Set this to your registered username.</li>
                     <li><code className="text-yellow-400">x-admin-key</code>: The value for this key is the answer to the riddle below.</li>
                 </ul>
-                <p className="italic mt-4">I am the bedrock, though rarely seen. I whisper commands, yet hold no machine. I set the boundaries, then stand outside. A digital deity, where all must abide. What am I?</p>
+                <p className="italic mt-4">I am the bedrock, though rarely seen. I whisper commands, yet hold no machine. I set the boundaries, then stand outside. A digital deity, where all must abide. What am I? (Hint: The answer is 'superadmin')</p>
                 <p className="text-sm mt-4 text-gray-400">Hint: You can use tools like Postman or curl to make a request with custom headers.</p>
             </div>
         </div>
+        
+        {/* --- UPDATED Vulnerability Hints --- */}
         <div className="bg-gray-800 p-4 rounded-md">
             <h3 className="font-bold text-lg text-green-400">Web Vulnerability Challenges</h3>
             <ul className="list-disc list-inside mt-2 space-y-2">
-                {/* --- NEW HINT --- */}
-                <li><strong>Product Enumeration:</strong> Not all products are for public viewing. Can you find a way to list the unpublished items using the site's search functionality? The endpoint is `/api/products/search`.</li>
-                <li><strong>Login Bypass:</strong> Is the login form as strong as it seems?</li>
-                {/* ... other hints ... */}
+                <li><strong>NoSQL Injection:</strong> The product search at <code>/api/products/search</code> seems to take a complex query. Can you use it to find things that aren't published?</li>
+                <li><strong>IDOR (Insecure Direct Object Reference):</strong> Our <code>admin-bot</code> automatically tests new flags. You can check its profile to see what it's been up to. Can you find its profile endpoint?</li>
+                <li><strong>Broken Authentication (JWT):</strong> We've moved to a modern JWT system. Surely it's impenetrable. There's a <code>/api/admin-check</code> endpoint, but it's for admins only. What's the secret key?</li>
+                <li><strong>Client-Side Recon:</strong> Not all secrets are in the backend. Have you checked all the client-side JavaScript files being served?</li>
+                <li><strong>Cross-Site Scripting (XSS):</strong> There's a page where you can leave comments. Does it properly sanitize your input? Check the console too!</li>
+                <li><strong>Insecure Deserialization:</strong> We use a cookie to store your user preferences at <code>/api/user-prefs</code>. It seems to be encoded... I wonder if it can be manipulated to run code on the server? The flag is at <code>/flag.txt</code> on the server (check server logs).</li>
             </ul>
         </div>
 

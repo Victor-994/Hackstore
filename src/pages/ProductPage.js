@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getProductById } from '../api'; // We will add this function to api.js
+import { getProductById } from '../api';
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -9,6 +9,8 @@ export default function ProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      // --- NEW (Suggestion 3 - Recon Flag) ---
+      // CTF{JAVASCRIPT_SOURCE_CODE_REVIEW}
       try {
         const data = await getProductById(id);
         setProduct(data);

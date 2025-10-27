@@ -5,26 +5,28 @@ const API_URL = "https://hack-backend-lcsb.onrender.com";
 // https://hack-backend-lcsb.onrender.com
 
 
+// --- NEW (Suggestion 2 - JWT) ---
+// Helper function to get the auth token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
+
+// Helper function to create authenticated headers
+const getAuthHeaders = () => ({
+  "Content-Type": "application/json",
+  "Authorization": `Bearer ${getAuthToken()}`,
+});
+
+// --- Public Endpoints ---
+
 export const fetchProducts = async () => {
   const res = await fetch(`${API_URL}/products`);
   return res.json();
 };
 
-export const loginUser = async (username, password) => {
-  const res = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-  return res.json();
-};
-
-export const registerUser = async (username, password) => {
-  const res = await fetch(`${API_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
+export const getProductById = async (id) => {
+  const res = await fetch(`${API_URL}/api/products/${id}`);
+  if (!res.ok) throw new Error("Product not found");
   return res.json();
 };
 
@@ -37,75 +39,75 @@ export const postComment = async (comment) => {
   return res.text();
 };
 
-export const submitFlag = async (username, flag) => {
-  const res = await fetch(`${API_URL}/submit-flag`, {
+export const getScoreboard = async () => {
+  // Scoreboard is public
+  const res = await fetch(`${API_URL}/scoreboard`);
+  return res.json();
+};
+
+export const getActivityFeed = async () => {
+  // Activity feed is public
+  const res = await fetch(`${API_URL}/api/activity-feed`);
+  return res.json();
+};
+
+// REMOVED getKingOfTheHill
+
+// --- Auth Endpoints (Return token) ---
+
+export const loginUser = async (username, password) => {
+  const res = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, flag }),
+    body: JSON.stringify({ username, password }),
+  });
+  return res.json(); // Returns { message, token, username } or { error }
+};
+
+export const registerUser = async (username, password) => {
+  const res = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  return res.json(); // Returns { message, token, username } or { error }
+};
+
+
+// --- Authenticated Endpoints (Require token) ---
+
+export const submitFlag = async (flag) => {
+  // Use authenticated headers
+  const res = await fetch(`${API_URL}/submit-flag`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ flag }), // Username comes from token on backend
   });
   return res.json();
 };
 
-export const getScoreboard = async () => {
-    const res = await fetch(`${API_URL}/scoreboard`);
-    return res.json();
-};
-
-
-// --- NEW API FUNCTIONS for ENHANCED FEATURES ---
-
-/**
- * Fetches a user's detailed profile, including score and captured flags.
- * Used for the Profile page.
- * @param {string} username - The user's username.
- */
 export const getUserProfile = async (username) => {
-    const res = await fetch(`${API_URL}/api/profile/${username}`);
-    if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || 'Failed to fetch profile');
-    }
-    return res.json();
+  // This endpoint remains public for the IDOR challenge
+  const res = await fetch(`${API_URL}/api/profile/${username}`);
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Failed to fetch profile");
+  }
+  return res.json();
 };
 
-/**
- * Fetches the latest events for the live activity feed.
- * Used on the Home page.
- */
-export const getActivityFeed = async () => {
-    const res = await fetch(`${API_URL}/api/activity-feed`);
-    return res.json();
-};
+// REMOVED captureKingOfTheHill
 
-/**
- * Gets the current status of the King of the Hill challenge.
- * Used on the King of the Hill page.
- */
-export const getKingOfTheHill = async () => {
-    const res = await fetch(`${API_URL}/api/king-of-the-hill`);
-    return res.json();
-};
-
-/**
- * Submits an attempt to capture the King of the Hill.
- * Used on the King of the Hill page.
- * @param {string} username - The username of the player attempting the capture.
- * @param {string} answer - The player's answer to the challenge.
- */
-export const captureKingOfTheHill = async (username, answer) => {
-    const res = await fetch(`${API_URL}/api/king-of-the-hill/capture`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, answer }),
-    });
-    return res.json();
-};
-
-
-export const getProductById = async (id) => {
-    const res = await fetch(`${API_URL}/api/products/${id}`);
-    if (!res.ok) {
-        throw new Error('Product not found');
-    }
-    return res.json();
+// --- NEW (Suggestion 2 - JWT Challenge Endpoint) ---
+export const getAdminCheck = async () => {
+  const res = await fetch(`${API_URL}/api/admin-check`, {
+    method: "GET",
+    headers: getAuthHeaders(), // Requires a valid (potentially forged) token
+  });
+  // Check if response is OK before parsing JSON
+  if (!res.ok) {
+     const errorData = await res.json().catch(() => ({ error: `Admin check failed with status: ${res.status}` }));
+     throw new Error(errorData.error || "Failed to perform admin check");
+  }
+  return res.json(); // Returns { message, flag } or { error }
 };
